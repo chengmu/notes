@@ -21,6 +21,9 @@ When you fire up the server and send it an HTTP request (with or a web curl brow
 + allows you to define a path prefix that is required in order for the middleware to be called
 
 ####exmaple
+
+
+``` javascript
     connect()
      .use(logger)
      .use('/admin', restrict); // string will be identified as a path prefix to
@@ -28,20 +31,27 @@ When you fire up the server and send it an HTTP request (with or a web curl brow
      .use('/admin', admin)
      .use(hello)
      .listen(3000);
+```
+
 
 ###Configurable Middleware
 
 ####Basic structure
-    function setup(options) {
-        // setup logic
 
-        return function(req, res, next) {
-            // middleware logic
+``` javascript
+function setup(options) {
+    // setup logic
 
-        }
+    return function(req, res, next) {
+        // middleware logic
+
     }
+}
+``` 
 ####usage
+``` javascript
     app.use(setup({some : 'options'}));
+```
 
 
 
