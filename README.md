@@ -3,9 +3,6 @@ notes
 
 all sorts of notes ~~while I study all sorts of things~~
 
-~~测试下是不是真的支持strickthrogh~~
-<del>只能用标签实现？</del>
-
 
 
 最近真是迷全职迷得紧^^ 放logo镇repo!
