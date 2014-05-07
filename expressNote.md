@@ -1,57 +1,41 @@
-#connect
+#express notes
 
-##core
-When you fire up the server and send it an HTTP request (with or a web curl browser) you will see the text "Cannot GET /" indicating that this application is not configured to handle the requested url. This is the first example of how Connect'sdistpatcher works: it invokes each attached middleware one by one until one of them decides to respond to the request. If it gets to the end of the list of middleware and none of them respond, then the application will respond with a 404.
+##enviroment-driven
 
-
-##middleware
-+ a function that by convention accepts three arguments:
-    - a request object,
-    - a response object,
-    - an argument commonly named `next`, which is a callback function indicating that the next middleware is done and the next middleware can be executed.
-
-###Demos
-+ loggers
-+ sayHi
-
-###Order is important
-+ remaining middleware won't be invoked if `next` is ommited;
-
-###Mounting
-+ allows you to define a path prefix that is required in order for the middleware to be called
-
-####exmaple
-
-
-``` javascript
-    connect()
-     .use(logger)
-     .use('/admin', restrict); // string will be identified as a path prefix to
-                               // match `req.url`
-     .use('/admin', admin)
-     .use(hello)
-     .listen(3000);
+```
+NODE_ENV=development node index.js
 ```
 
+Acturally it set a environ variable in the process;
+[An object containing the user environment. See environ(7).](http://nodejs.org/api/process.html#process_process_env)
 
-###Configurable Middleware
+[Linux Programmer's Manual:environ(7)](http://man7.org/linux/man-pages/man7/environ.7.html)
 
-####Basic structure
+[find an nice guide  on express's envrioment-driven development](http://www.hacksparrow.com/running-express-js-in-production-mode.html)
 
-``` javascript
-function setup(options) {
-    // setup logic
+###apis based on enviroment
++ `app.configure()`
 
-    return function(req, res, next) {
-        // middleware logic
++ `app.set()`
 
-    }
-}
-``` 
-####usage
-``` javascript
-    app.use(setup({some : 'options'}));
++ `app.get()`
+
++ `app.enable()`
+
++ `app.disable()`
+
+```javascript
+app.configure('development', function(){
+    app.use(express.errorHandler()); 
+});
+
 ```
 
-
-
+##TIPS:
+__dirname
+__dirname(note the two leading underscores) is a global directory in
+Node  in  which  the  currently  running  file  .  Many  times  in exists
+development  this  directory  will  be  the  same  as  your  current  working
+directory (CWD), but in production the Node executable may run from
+another  directory  (using   helps  keep  paths  consistent __dirname
+across environments).
