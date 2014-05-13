@@ -1,0 +1,7 @@
+{
+  "generator-reveal": {
+    "presentationTitle": "Connect and Express",
+    "packageVersion": "0.0.0",
+    "useSass": true
+  }
+}
