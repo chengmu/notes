@@ -3,6 +3,12 @@
 clip from `Nodejs in action`.
 
 ##Core procedure
+
+ middleware is simply a function that intercepts the request and response objects provided by
+the HTTP server, executes logic, and when its finished either ends the response or
+passes  it  to  the  next  middleware.  Connect  "connects"  the  middleware  together
+using what's called the `dispatcher`
+
 >When you fire up the server and send it an HTTP request (with or a web curl browser) you will see the text "Cannot GET /" indicating that this application is not configured to handle the requested url. This is the first example of how Connect'sdistpatcher works: it __invokes each attached middleware one by one until one of them decides to respond to the request__. If it gets to the end of the list of middleware and none of them respond, then the application will respond with a 404.
 
 
