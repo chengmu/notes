@@ -1,6 +1,6 @@
-##  connect_mds_list
+<!-- ##  connect_mds_list -->
 
-This is a new Markdown slide
+[middlewares list on connect wiki](https://github.com/senchalabs/connect/wiki)
 
 note:
     Put your speaker notes here.

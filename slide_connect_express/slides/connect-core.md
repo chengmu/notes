@@ -2,8 +2,8 @@
 
 1. attach middleware `app.use`
 2. dispatch `app.handle`
-    - invokes each attached _middleware_ one by one until one of them decides to _respond to the request_.
-    - If it gets to the end of the list of middleware and none of them respond, then the application will respond with a 404.
+    - invokes each attached _middleware_ one by one until one of them decides to _respond to the request_(exec `res.end`).
+    - If it gets to the end of the list of middleware and none of them respond(`res.end`never called), then the application will respond with a 404.
 
 
 note:

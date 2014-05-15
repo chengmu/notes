@@ -33,19 +33,36 @@ var logger = function (req, res, next) {
 		next();
 		return;
 	}
+
 	console.log('method: ' + req.method + ';/ url: ' + rq.url + ';/ time: ' + new Date());
 	res.write('You are visiting ' + req.url); 
 	next();
 };
 
+function errorHandler() {
+	var env = process.env.NODE_ENV || 'development';
+	return function(err, req, res, next) { 
+		res.statusCode = 500;
+		switch (env) { 
+			case 'development':
+				res.setHeader('Content-Type', 'application/json');
+				res.end(err.stack);
+				break;
+			default:
+				res.end('Server error');
+		}
+	}
+}
+
+
 var app = require('connect')();
 
+// 注册中间件
 app.use(logger)
-	.use(incomingMessageToWatchTower);
+	.use(incomingMessageToWatchTower)
+	.use(errorHandler());
 
-// app.listen(3002);
-http.createServer(app).listen(3002);
-
+app.listen(3002);
 
 
 console.log('start listening 3002 @localhost');

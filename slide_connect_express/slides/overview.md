@@ -9,10 +9,11 @@
     - Get start: use cli to generate
     - _connect + middlewares + mvc + config => express(apis)_
     - _enviroment-based configure_ / view data exposing
-+ more..
+    
+<!-- + more..
     - useful toolkit:debug/url/
     - RESTful
-
+ -->
 note:
     Put your speaker notes here.
     You can see them pressing 's'.

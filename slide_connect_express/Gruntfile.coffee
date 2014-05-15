@@ -115,7 +115,7 @@ module.exports = (grunt) ->
         ]
 
     grunt.registerTask 'server',
-        'Run presentation locally and start watch process (living document).', [
+        'Run presentation ..', [
             'buildIndex'
             'sass'
             'connect:livereload'
