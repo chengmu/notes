@@ -1,10 +1,15 @@
+#How it works: building a nodejs server
+intro to `nodejs http module`, `connect`, `express`
 
-# Connect and Express
+_By zhulin @2014-5-15_
 
-From the terminal, pop in:
 
-  ```yo reveal:slide "Slide Title"```
 
-Available options:
+note:
+    From the terminal, pop in:
 
- ```--markdown --attributes --notes```
+      ```yo reveal:slide "Slide Title"```
+
+    Available options:
+
+     ```--markdown --attributes --notes```

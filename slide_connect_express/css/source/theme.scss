@@ -29,13 +29,13 @@
         font-style: normal;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+// @import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 // ---------------------------------------------
 
 // Override theme settings ---------------------
 $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0,0,0,.1), 0 0 5px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.3), 0 3px 5px rgba(0,0,0,.2), 0 5px 10px rgba(0,0,0,.25), 0 20px 20px rgba(0,0,0,.15);
 // Other options include e.g.
-$mainFont: 'LondrinaSolid-Regular' cursive;
+$mainFont: cursive;
 // $linkColor: #ed1dff;
 // $linkColorHover: $linkColor;
 $headingFont: 'LondrinaSolid-Regular';
@@ -59,3 +59,31 @@ $headingFont: 'LondrinaSolid-Regular';
 
 // See ../../bower_components/reveal.js/css/theme/README.md
 // for further explanations on how reveal.js themes work.
+
+
+.reveal {
+
+    em {
+        color:rosybrown;
+    }
+
+    i{
+        color:rosybrown;
+    }
+
+    strong{
+        color:burlywood;
+    }
+
+    b{
+        color:burlywood;
+    }
+
+    code{
+        font-family: Consolas;
+        border: 1px solid rgba(0,0,0,.5);
+        background-color: rgba(0,0,0,.6);
+        padding: 0 .3em;
+        border-radius: 11px;
+    }
+}

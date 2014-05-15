@@ -3,7 +3,6 @@
  *
  * Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
  */
-@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
 @font-face {
   font-family: 'LondrinaSolid-Regular';
   src: url("LondrinaSolid-Regular.woff"); }
@@ -27,7 +26,7 @@ body {
   background-color: #2b2b2b; }
 
 .reveal {
-  font-family: "LondrinaSolid-Regular" cursive;
+  font-family: cursive;
   font-size: 36px;
   font-weight: normal;
   letter-spacing: -0.02em;
@@ -148,3 +147,18 @@ body {
  *********************************************/
 .reveal .slide-number {
   color: #13daec; }
+
+.reveal em {
+  color: rosybrown; }
+.reveal i {
+  color: rosybrown; }
+.reveal strong {
+  color: burlywood; }
+.reveal b {
+  color: burlywood; }
+.reveal code {
+  font-family: Consolas;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 0 .3em;
+  border-radius: 11px; }

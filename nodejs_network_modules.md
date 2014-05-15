@@ -62,6 +62,11 @@ var req = http.request(options, function(res) {
 继承自`Readable Stream`[(Stream.Readable)](http://nodejs.org/api/stream.html#stream_class_stream_readable)；
 由`Server`或者`clientRequest`创建，作为第一个参数分别传递给`request`或者`response`事件。
 
+
+###outGoingMessage(未暴露)
+继承自`writable Stream`。
+内部类，未暴露出来。
+
 ####事件
 
 + close
