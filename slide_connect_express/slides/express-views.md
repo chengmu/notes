@@ -9,7 +9,9 @@ app.set('view engine', 'jade');
 res.render(view, [locals], callback)
 // or
 app.render(view, [options], callback)
+
 ```
++ setting: ` view cache` / `view engine` / `views `
 + `/views` lays these template file
 + support `ejs`, `jade` etc
 + if under `NODE_ENV !== 'development'`, views template function would be cached, which is bad for local debug.

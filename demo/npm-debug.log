@@ -1,0 +1,68 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'node-inpector' ]
+2 info using npm@1.4.3
+3 info using node@v0.10.26
+4 verbose cache add [ 'node-inpector', null ]
+5 verbose cache add name=undefined spec="node-inpector" args=["node-inpector",null]
+6 verbose parsed url { protocol: null,
+6 verbose parsed url   slashes: null,
+6 verbose parsed url   auth: null,
+6 verbose parsed url   host: null,
+6 verbose parsed url   port: null,
+6 verbose parsed url   hostname: null,
+6 verbose parsed url   hash: null,
+6 verbose parsed url   search: null,
+6 verbose parsed url   query: null,
+6 verbose parsed url   pathname: 'node-inpector',
+6 verbose parsed url   path: 'node-inpector',
+6 verbose parsed url   href: 'node-inpector' }
+7 silly lockFile e89a94ae-node-inpector node-inpector
+8 verbose lock node-inpector C:\Users\Administrator\AppData\Roaming\npm-cache\e89a94ae-node-inpector.lock
+9 silly lockFile e89a94ae-node-inpector node-inpector
+10 silly lockFile e89a94ae-node-inpector node-inpector
+11 verbose addNamed [ 'node-inpector', '' ]
+12 verbose addNamed [ null, '*' ]
+13 silly lockFile ae7372a4-node-inpector node-inpector@
+14 verbose lock node-inpector@ C:\Users\Administrator\AppData\Roaming\npm-cache\ae7372a4-node-inpector.lock
+15 silly addNameRange { name: 'node-inpector', range: '*', hasData: false }
+16 verbose url raw node-inpector
+17 verbose url resolving [ 'https://registry.npmjs.org/', './node-inpector' ]
+18 verbose url resolved https://registry.npmjs.org/node-inpector
+19 info trying registry request attempt 1 at 10:43:16
+20 http GET https://registry.npmjs.org/node-inpector
+21 http 404 https://registry.npmjs.org/node-inpector
+22 silly registry.get cb [ 404,
+22 silly registry.get   { date: 'Fri, 16 May 2014 02:43:10 GMT',
+22 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R14B04)',
+22 silly registry.get     'content-type': 'application/json',
+22 silly registry.get     via: '1.1 varnish',
+22 silly registry.get     'cache-control': 'max-age=0',
+22 silly registry.get     'content-length': '52',
+22 silly registry.get     'accept-ranges': 'bytes',
+22 silly registry.get     age: '0',
+22 silly registry.get     'x-served-by': 'cache-v41-ASH, cache-ty66-TYO',
+22 silly registry.get     'x-cache': 'MISS, MISS',
+22 silly registry.get     'x-cache-hits': '0, 0',
+22 silly registry.get     'x-timer': 'S1400208190.335173130,VS0,VS88,VE192,VE269',
+22 silly registry.get     'keep-alive': 'timeout=10, max=50',
+22 silly registry.get     connection: 'Keep-Alive' } ]
+23 silly lockFile ae7372a4-node-inpector node-inpector@
+24 silly lockFile ae7372a4-node-inpector node-inpector@
+25 error 404 'node-inpector' is not in the npm registry.
+25 error 404 You should bug the author to publish it
+25 error 404
+25 error 404 Maybe try 'npm search inpector'
+25 error 404
+25 error 404 Note that you can also install from a
+25 error 404 tarball, folder, or http url, or git url.
+26 error System Windows_NT 6.1.7601
+27 error command "c:\\Program Files\\nodejs\\node.exe" "c:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "-g" "node-inpector"
+28 error cwd d:\batcave\notes\demo
+29 error node -v v0.10.26
+30 error npm -v 1.4.3
+31 error code E404
+32 verbose exit [ 1, true ]

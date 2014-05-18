@@ -156,6 +156,8 @@ body {
   color: burlywood; }
 .reveal b {
   color: burlywood; }
+.reveal a:not(.image) {
+  color: #C48C2A; }
 .reveal code {
   font-family: Consolas;
   border: 1px solid rgba(0, 0, 0, 0.5);

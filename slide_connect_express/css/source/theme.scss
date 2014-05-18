@@ -79,6 +79,13 @@ $headingFont: 'LondrinaSolid-Regular';
         color:burlywood;
     }
 
+    a{
+        &:not(.image) {
+            color:#C48C2A;
+        }
+
+    }
+
     code{
         font-family: Consolas;
         border: 1px solid rgba(0,0,0,.5);
