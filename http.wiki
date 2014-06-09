@@ -1,0 +1,686 @@
+= HTTP =
+
+记录HTTP标准的一些基础概念和参考。
+
+== 基础 ==
+
+=== TCP/IP ===
+
+'''TCP/IP'''指与互联网相关连的协议的集合。
+
+==== 分层管理模型 ====
+
+好处 ：分好层次，规划好每层之间接口后，方便维护和更改具体设计。
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">层</th>
+<th align="center">协议</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">应用</td>
+<td align="center">HTTP,FTP,DNS</td>
+<td align="left">提供应用服务</td>
+</tr>
+<tr class="even">
+<td align="left">传输</td>
+<td align="center">TCP, UDP</td>
+<td align="left">提供处在网络中的两台计算机之间的数据传输</td>
+</tr>
+<tr class="odd">
+<td align="left">网络</td>
+<td align="center">IP</td>
+<td align="left">处理在网络上流动的数据包，选择传输路线（该层规定了通过怎样的路径达到对方计算机，并把数据包传给对方）</td>
+</tr>
+<tr class="even">
+<td align="left">数据链路</td>
+<td align="center">网络</td>
+<td align="left">硬件 OS, 设备驱动，NIC，网络适配器，光纤等等</td>
+</tr>
+</table>
+
+发送端从上往下走，接收端从下往上走。 具体描述：
+
+1.应用层发出一个http请求， 2.传输层的TCP协议把拿到的HTTP请求报文分割，并打上标记序号和端口号转发给网络层 3.网络层（IP）增加作为通信目的地的MAC地址后转给链路层 4.接收端再一层层的拆包
+
+==== '''封装（encapsulate）''' ====
+
+发送端每过一层会将数据包打上一层该层所属的首部信息； 接收端则每过一层时拆除属于该层的首部信息。
+
+==== 各协议职责 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">协议</th>
+<th align="left">职责描述</th>
+</tr>
+<tr class="odd">
+<td align="left">HTTP</td>
+<td align="left">生成针对目标服务器的HTTP请求报文/处理请求的内容，发送结果</td>
+</tr>
+<tr class="even">
+<td align="left">TCP</td>
+<td align="left">把报文分割成报文段/接受并重组报文段</td>
+</tr>
+<tr class="odd">
+<td align="left">IP</td>
+<td align="left">搜索对方地址，一边中转一边传送</td>
+</tr>
+</table>
+
+==== TCP ====
+
+三次握手 SYN=&gt;SYN/ACK=&gt;ACK
+
+=== URI ===
+
+Uniform Resource Idenifier 统一资源标示符
+
+'''绝对URI'''
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">协议名</th>
+<th align="left">登录信息</th>
+<th align="left">服务地址</th>
+<th align="left">端口号</th>
+<th align="left">文件路径</th>
+<th align="left">查询字符串</th>
+<th align="left">片段标示符</th>
+</tr>
+<tr class="odd">
+<td align="left">http://</td>
+<td align="left">user:pass@</td>
+<td align="left">www.youdao.com</td>
+<td align="left">:80</td>
+<td align="left">/dir/index.html</td>
+<td align="left">?uid=1</td>
+<td align="left">#ch=1</td>
+</tr>
+</table>
+
+URI分两种实现
+
+* URL
+* URN
+
+=== 报文 ===
+
+==== 基本格式 ====
+
+* header
+** 请求行/响应行
+** 首部字段（fields）
+* CR + LF
+* body
+
+举例测试方法：
+
+<pre>curl -v http://youdao.com</pre>
+得到结果如下：
+
+==== request ====
+
+<pre>&gt; GET / HTTP/1.1
+&gt; User-Agent: curl/7.30.0
+&gt; Host: youdao.com
+&gt; Accept: */*</pre>
+==== response ====
+
+<pre>&lt; HTTP/1.1 302 Moved Temporarily
+* Server nginx is not blacklisted
+&lt; Server: nginx
+&lt; Date: Mon, 09 Jun 2014 08:41:53 GMT
+&lt; Content-Type: text/html
+&lt; Content-Length: 154
+&lt; Connection: keep-alive
+&lt; Location: http://www.youdao.com/
+&lt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;302 Found&lt;/title&gt;&lt;/head&gt;
+&lt;body bgcolor=&quot;white&quot;&gt;
+&lt;center&gt;&lt;h1&gt;302 Found&lt;/h1&gt;&lt;/center&gt;
+&lt;hr&gt;&lt;center&gt;nginx&lt;/center&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+== HTTP ==
+
+HTTP协议用于客户端和服务端之间的通信，通过请求和响应的交换达成通信。不保存状态；使用URI定位资源。
+
+=== Method ===
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">方法名</th>
+<th align="left">描述</th>
+<th align="left">版本</th>
+</tr>
+<tr class="odd">
+<td align="left">GET</td>
+<td align="left">获取资源</td>
+<td align="left">1.1，1.0</td>
+</tr>
+<tr class="even">
+<td align="left">POST</td>
+<td align="left">传输实体的主体</td>
+<td align="left">1.1，1.0</td>
+</tr>
+<tr class="odd">
+<td align="left">PUT</td>
+<td align="left">传输文件，无验证机制</td>
+<td align="left">1.1，1.0</td>
+</tr>
+<tr class="even">
+<td align="left">HEAD</td>
+<td align="left">获得首部，不返回主体</td>
+<td align="left">1.1，1.0</td>
+</tr>
+<tr class="odd">
+<td align="left">DELETE</td>
+<td align="left">删除文件，无验证机制</td>
+<td align="left">1.1，1.0</td>
+</tr>
+<tr class="even">
+<td align="left">OPTIONS</td>
+<td align="left">询问支持的方法</td>
+<td align="left">1.1</td>
+</tr>
+<tr class="odd">
+<td align="left">TRACE</td>
+<td align="left">追踪路径，将之前的请求通信环回复给客户端</td>
+<td align="left">1.1</td>
+</tr>
+<tr class="even">
+<td align="left">CONNECT</td>
+<td align="left">要求建立隧道，使用隧道协议进行通信（使用SSL和TLS加密后经过网络隧道传输）</td>
+<td align="left">1.1</td>
+</tr>
+</table>
+
+注： + SSL：Security Sockets Layer 安全套接层 + TLS：Transport Layer Security 传输层安全
+
+=== 状态码 ===
+
+描述返回的请求结果，第一位指定响应类型
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">状态码</th>
+<th align="left">类别</th>
+<th align="left">原因短语</th>
+</tr>
+<tr class="odd">
+<td align="left">1XX</td>
+<td align="left">Infomational(信息性状态编码)</td>
+<td align="left">接受的请求正在处理</td>
+</tr>
+<tr class="even">
+<td align="left">2XX</td>
+<td align="left">Succes（成功）</td>
+<td align="left">请求正常处理完毕</td>
+</tr>
+<tr class="odd">
+<td align="left">3XX</td>
+<td align="left">Redirection（重定向状态）</td>
+<td align="left">需要附加操作来完成请求</td>
+</tr>
+<tr class="even">
+<td align="left">4XX</td>
+<td align="left">Client Error(客户端错误代码)</td>
+<td align="left">服务端无法处理请求</td>
+</tr>
+<tr class="odd">
+<td align="left">5XX</td>
+<td align="left">Server Error(服务端错误代码）</td>
+<td align="left">服务器处理出错</td>
+</tr>
+</table>
+
+==== 常见状态码 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">状态码</th>
+<th align="left">原因短语</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">2XX</td>
+<td align="left">成功</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">200</td>
+<td align="left">OK</td>
+<td align="left">正常处理</td>
+</tr>
+<tr class="odd">
+<td align="left">204</td>
+<td align="left">No Content</td>
+<td align="left">已经成功处理，但没有资源可以返回，即没有实体主体部分</td>
+</tr>
+<tr class="even">
+<td align="left">206</td>
+<td align="left">Partial Content</td>
+<td align="left">该请求为范围请求</td>
+</tr>
+<tr class="odd">
+<td align="left">3XX</td>
+<td align="left">重定向</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">301</td>
+<td align="left">Moved Permanently</td>
+<td align="left">永久性重定向，该资源已经被分配新URL</td>
+</tr>
+<tr class="odd">
+<td align="left">302</td>
+<td align="left">Found</td>
+<td align="left">临时重定向，只在本次使用新URL</td>
+</tr>
+<tr class="even">
+<td align="left">303</td>
+<td align="left">See Other</td>
+<td align="left">和302类似，但是要求用GET方法访问新URL</td>
+</tr>
+<tr class="odd">
+<td align="left">304</td>
+<td align="left">Not Modified</td>
+<td align="left">不符合条件，未返回任何响应主体</td>
+</tr>
+<tr class="even">
+<td align="left">307</td>
+<td align="left">Temporary Redirect</td>
+<td align="left">和302相同，并且强调不可以把POST改成GET</td>
+</tr>
+<tr class="odd">
+<td align="left">4XX</td>
+<td align="left">客户端错误代码</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">400</td>
+<td align="left">Bad Request</td>
+<td align="left">报文中存在语法错误</td>
+</tr>
+<tr class="odd">
+<td align="left">401</td>
+<td align="left">Unauthorized</td>
+<td align="left">无权限；客户端初次接收到401的时候弹窗要求输入密码账户；第二次意味着认证失败</td>
+</tr>
+<tr class="even">
+<td align="left">403</td>
+<td align="left">Forbidden</td>
+<td align="left">访问被拒绝，例如权限问题</td>
+</tr>
+<tr class="odd">
+<td align="left">404</td>
+<td align="left">Not Found</td>
+<td align="left">该资源不存在</td>
+</tr>
+<tr class="even">
+<td align="left">5XX</td>
+<td align="left">服务器错误</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">500</td>
+<td align="left">Internal Sever Error</td>
+<td align="left">执行请求时发生故障</td>
+</tr>
+<tr class="even">
+<td align="left">503</td>
+<td align="left">Service Unavailable</td>
+<td align="left">服务器超负载或者正停机维护，无法处理请求</td>
+</tr>
+</table>
+
+=== 首部字段 ===
+
+<pre>// 字段名：字段值
+Content-Type: text/html</pre>
+4种类型
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">类型</th>
+<th align="left">英文</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">通用首部字段</td>
+<td align="left">General Header Fields</td>
+<td align="left">请求和响应双方都使用的字段</td>
+</tr>
+<tr class="even">
+<td align="left">请求首部字段</td>
+<td align="left">Request Header Fields</td>
+<td align="left">请求报文，补充请求的附加内容、客户端信息、内容相关优先级</td>
+</tr>
+<tr class="odd">
+<td align="left">响应首部字段</td>
+<td align="left">Response Header Fields</td>
+<td align="left">响应报文，补充相应的附加内容，</td>
+</tr>
+<tr class="even">
+<td align="left">实体首部字段</td>
+<td align="left">Entity Header Fields</td>
+<td align="left">补充资源更新时间等与实体有关的信息</td>
+</tr>
+</table>
+
+非正式的头部字段在RFC4229中，如Cookie相关的。
+
+按照缓存代理的行为：
+
+* 端到端首部（End-to-End）:必须被转发
+* 逐条首部（Hop-by-hop)： 只对单次转发有效（keep-alive, Connection等等）
+
+这里只简单记录Cache等核心字段
+
+==== 通用字段 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">取值</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">'''Cache-Control'''</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">no-cache</td>
+<td align="left">强制向源服务器验证</td>
+</tr>
+<tr class="odd">
+<td align="left">no-store</td>
+<td align="left">报文中有私密内容，禁止缓存</td>
+</tr>
+<tr class="even">
+<td align="left">max-age</td>
+<td align="left">客户端判断缓存时间，小于该值才使用；响应中该数值意味着该时间范围内缓存代理不需要再确认</td>
+</tr>
+<tr class="odd">
+<td align="left">min-fresh</td>
+<td align="left">指定还未超过该时间的缓存</td>
+</tr>
+<tr class="even">
+<td align="left">'''Connection'''</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">具体字段名</td>
+<td align="left">控制不再转发给代理的首部字段</td>
+</tr>
+<tr class="even">
+<td align="left">close</td>
+<td align="left">关闭持久链接</td>
+</tr>
+<tr class="odd">
+<td align="left">Keep-Alive</td>
+<td align="left">1.1之前的HTTP默认非持久，需要指定开启</td>
+</tr>
+<tr class="even">
+<td align="left">'''Transfer-Encoding'''</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">chunked</td>
+<td align="left">指定报文主体的编码方式：分块传输</td>
+</tr>
+<tr class="even">
+<td align="left">'''Upgrade'''</td>
+<td align="left">更高版本或者其他通信协议</td>
+</tr>
+<tr class="odd">
+<td align="left">'''via'''</td>
+<td align="left">追踪传输路径</td>
+</tr>
+</table>
+
+==== 请求字段 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">取值</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">Accept, Accept-''| 接受数据类型，语言，编码等等| |Host| 重要！！例如访问VPS的情况下，需要知道域名| |if-''</td>
+<td align="left">条件请求</td>
+</tr>
+<tr class="even">
+<td align="left">Max-Forwards</td>
+<td align="left">限制转发次数，可用于查错</td>
+</tr>
+<tr class="odd">
+<td align="left">Range</td>
+<td align="left">只请求部分数据</td>
+</tr>
+<tr class="even">
+<td align="left">Refer</td>
+<td align="left">发起请求的网址；拼写是错的但是一直通用</td>
+</tr>
+<tr class="odd">
+<td align="left">User-Agent</td>
+<td align="left">客户端信息</td>
+</tr>
+</table>
+
+==== 响应字段 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">取值</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">location</td>
+<td align="left">重定向后的地址</td>
+</tr>
+<tr class="even">
+<td align="left">Server</td>
+<td align="left">服务端信息</td>
+</tr>
+</table>
+
+==== 实体字段 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">取值</th>
+<th align="left">描述</th>
+</tr>
+<tr class="odd">
+<td align="left">Content-*</td>
+<td align="left">内容相关信息</td>
+</tr>
+<tr class="even">
+<td align="left">Content-Location</td>
+<td align="left">若返回资源和请求的URL不一致，这里说明（eg:youdao.com/index.html）</td>
+</tr>
+<tr class="odd">
+<td align="left">Expires</td>
+<td align="left">该内容可缓存到该日期；max-age比这个优先</td>
+</tr>
+</table>
+
+==== Cookie相关 ====
+
+标准很多，基本上是基于网景公司当年那个版本
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">字段名称</th>
+<th align="left">描述</th>
+<th align="left">类型</th>
+</tr>
+<tr class="odd">
+<td align="left">'''Set-Cookie'''</td>
+<td align="left">设置Cookie</td>
+<td align="left">响应首部字段</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">NAME=VALUE</td>
+<td align="left">设置名称和值</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">expire=DATE</td>
+<td align="left">设置有效时间，省略时限制于客户端关闭前</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">path=HTTP</td>
+<td align="left">指定目录,可绕过</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">domain=域名</td>
+<td align="left">指定域名，与结尾匹配一致便会发送Cookie</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Secure</td>
+<td align="left">仅在HTTPS下发送</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">HttpOnly</td>
+<td align="left">js不能访问</td>
+</tr>
+<tr class="even">
+<td align="left">'''Cookie'''</td>
+<td align="left">服务器接受的信息</td>
+<td align="left">请求首部字段</td>
+</tr>
+</table>
+
+==== 其他 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">字段名称</th>
+<th align="left">取值</th>
+<th align="left">描述</th>
+<th align="left">类型</th>
+</tr>
+<tr class="odd">
+<td align="left">X-Frame-Options</td>
+<td align="left">DENY/SAMEORIGIN</td>
+<td align="left">是否允许被以iframe形式嵌入其他网页</td>
+</tr>
+<tr class="even">
+<td align="left">DNT</td>
+<td align="left">0/1</td>
+<td align="left">隐私保护</td>
+</tr>
+</table>
+
+=== 持久连接 ===
+
+HTTP Persistent Connection; HTTP keep-alive; HTTP connection routes
+
+只要任意一端未曾提出断开请求，该连接一直保持。HTTP1.1中为默认设置。需要客户端和服务端都支持。
+
+=== Cookies ===
+
+通过在请求和响应报文中写入cookie信息来控制客户端状态。 1. 根据葱服务端发送的响应报文中的<code>Set-Cookie</code>的首部字段信息通知客户端存Cookie； 2. 该客户端向该服务端发请求时自动带上Cookie； 3. 服务端对比记录，得到之前的状态
+
+=== 数据传输 ===
+
+==== 报文和实体 ====
+
+报文是箱子，实体是货物。 例如下面这个报文 <code>&lt; HTTP/1.1 200 OK * Server ecstatic-0.4.12 is not blacklisted &lt; server: ecstatic-0.4.12 &lt; Date: Mon, 09 Jun 2014 10:49:18 GMT &lt; Connection: keep-alive //------------------------- // 以下为实体首部（content相关的首部字段） &lt; content-length: 3 &lt; content-type: text/html; charset=UTF-8 &lt; etag: &quot;38476631-3-Mon Jun 09 2014 18:48:38 GMT+0800 (CST)&quot; &lt; last-modified: Mon, 09 Jun 2014 10:48:38 GMT &lt; cache-control: max-age=3600 &lt;   // CR+LF hi  // 实体主体</code> 实体主体只是原始数据，实体头部用于告诉我们如何解释数据
+
+==== 媒体类型和字符集 ====
+
+字符编码：<code>content-type</code> 多部分媒体 MIME
+
+==== 压缩 ====
+
+相关的首部字段<code>Content-Encoding</code>和<code>Accept-Encoding</code>
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">Content-Encoding值</th>
+<th align="left">含义</th>
+</tr>
+<tr class="odd">
+<td align="left">gzip</td>
+<td align="left">GNU zip</td>
+</tr>
+<tr class="even">
+<td align="left">compress</td>
+<td align="left">Unix</td>
+</tr>
+<tr class="odd">
+<td align="left">deflate</td>
+<td align="left">zlib</td>
+</tr>
+<tr class="even">
+<td align="left">identity</td>
+<td align="left">未设置编码，Content-Encoding未设置的默认情况</td>
+</tr>
+</table>
+
+==== 分块传输编码 ====
+
+Chunked Transfer Coding
+
+=== 通用数据转发程序 ===
+
+==== 代理 ====
+
+中间人 缓存代理：可以利用缓存技术减少流量 透明代理：转发请求或者响应时不更改加工
+
+==== 网关 ====
+
+转发其他服务器通信数据，如同拥有自己的资源一样处理请求；
+
+==== 隧道 ====
+
+在相隔甚远的客户端和服务器之间进行中转，保持双方通信的应用程序
+
+== 附录 ==
+
+==== CR和LF ====
+
+CR： Carriage Return； 回车符，十六进制 0x0d LF： Line Feed: 十六进制 0x0a
+
+==== 标准清单 ====
+
+<table class="wikitable">
+<tr class="header">
+<th align="left">时间</th>
+<th align="left">RFC</th>
+<th align="left">内容</th>
+</tr>
+<tr class="odd">
+<td align="left">1996.5</td>
+<td align="left">RFC1945</td>
+<td align="left">HTTP1.0</td>
+</tr>
+<tr class="even">
+<td align="left">1997.1</td>
+<td align="left">RFC2616</td>
+<td align="left">HTTP1.1</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">RFC3986</td>
+<td align="left">URI</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">RFC2046</td>
+<td align="left">mine</td>
+</tr>
+</table>
+
+
+[[category: check]]
