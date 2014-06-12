@@ -98,3 +98,4 @@ It’s ugly. It’s a hack and it looks like one.
 
 ##Reference
 [html5Doctor](http://html5doctor.com/history-api/)
+[MANIPULATING HISTORY FOR FUN & PROFIT](http://diveintohtml5.info/history.html)
